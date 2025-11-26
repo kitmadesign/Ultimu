@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sessão do Mestre - Ordem Paranormal</title>
+    
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- CSS Global -->
+    <link rel="stylesheet" href="../assets/css/global.css">
+    
+    <style>
+        .mestre-grid {
+            display: grid;
+            grid-template-columns: 300px 1fr 300px;
+            gap: 1rem;
+            height: calc(100vh - 56px);
+        }
+        
+        .initiative-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .player-status {
+            padding: 0.5rem;
+            border-radius: 6px;
+            margin-bottom: 0.5rem;
+            border-left: 4px solid transparent;
+        }
+        
+        .player-status.saudavel { border-left-color: #22c55e; }
+        .player-status.ferido { border-left-color: #f59e0b; }
+        .player-status.critico { border-left-color: #dc2626; }
+        
+        @media (max-width: 1200px) {
+            .mestre-grid {
+                grid-template-columns: 250px 1fr 250px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .mestre-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body data-bs-theme="dark">
+    <!-- Navbar do Mestre -->
+    <nav class="navbar navbar-expand-md bg-body p-0 fixed-top border-bottom border-secondary">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold" href="/">
+                <i class="fas fa-crown text-warning"></i> Sessão do Mestre
+            </a>
+            <div class="d-flex gap-2 align-items-center">
+                <span class="navbar-text text-light">
+                    <i class="fas fa-users"></i> <span id="player-count">0</span> jogadores
+                </span>
+                <button class="btn btn-sm btn-success">
+                    <i class="fas fa-play"></i> Iniciar Sessão
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div style="height: 56px;"></div>
+
+    <main class="container-fluid p-3">
+        <div class="mestre-grid">
+            <!-- Painel Esquerdo - Jogadores -->
+            <div class="left-panel">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-users"></i> Jogadores</h5>
+                    </div>
+                    <div class="card-body" id="players-panel">
+                        <div class="vazio">Nenhum jogador conectado</div>
+                    </div>
+                </div>
+                
+                <div class="card mt-3">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-list-ol"></i> Ordem de Iniciativa</h5>
+                    </div>
+                    <div class="card-body initiative-list" id="initiative-list">
+                        <div class="vazio">Iniciativa não iniciada</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Painel Central - Controles -->
+            <div class="center-panel">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-gamepad"></i> Controles da Sessão</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="grid-2 mb-3">
+                            <button class="btn btn-primary">
+                                <i class="fas fa-dice-d20"></i> Rolar Para Grupo
+                            </button>
+                            <button class="btn btn-warning">
+                                <i class="fas fa-sync"></i> Reiniciar Iniciativa
+                            </button>
+                            <button class="btn btn-info">
+                                <i class="fas fa-music"></i> Áudio Ambiente
+                            </button>
+                            <button class="btn btn-secondary">
+                                <i class="fas fa-volume-mute"></i> Silenciar Todos
+                            </button>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Mensagem para Jogadores</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Digite uma mensagem...">
+                                <button class="btn btn-outline-primary">Enviar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card mt-3">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-eye"></i> Visão dos Jogadores</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="vazio">Visualização em desenvolvimento</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Painel Direito - Ferramentas -->
+            <div class="right-panel">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-tools"></i> Ferramentas Rápidas</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-outline-primary">
+                                <i class="fas fa-plus"></i> Adicionar NPC
+                            </button>
+                            <button class="btn btn-outline-primary">
+                                <i class="fas fa-skull"></i> Criar Ameaça
+                            </button>
+                            <button class="btn btn-outline-primary">
+                                <i class="fas fa-map"></i> Gerenciar Mapas
+                            </button>
+                            <button class="btn btn-outline-primary">
+                                <i class="fas fa-history"></i> Histórico de Rolagens
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card mt-3">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-chart-bar"></i> Status da Sessão</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="vazio">Estatísticas da sessão</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Simulação de dados
+        setTimeout(() => {
+            document.getElementById('player-count').textContent = '3';
+            document.getElementById('players-panel').innerHTML = `
+                <div class="player-status saudavel">
+                    <strong>Jogador 1</strong><br>
+                    <small>PV: 12/12 | SAN: 8/8</small>
+                </div>
+                <div class="player-status ferido">
+                    <strong>Jogador 2</strong><br>
+                    <small>PV: 6/12 | SAN: 10/10</small>
+                </div>
+                <div class="player-status saudavel">
+                    <strong>Jogador 3</strong><br>
+                    <small>PV: 10/10 | SAN: 12/12</small>
+                </div>
+            `;
+            
+            document.getElementById('initiative-list').innerHTML = `
+                <div class="initiative-item d-flex justify-content-between align-items-center p-2 border-bottom">
+                    <span>👤 Jogador 1</span>
+                    <span class="badge bg-primary">15</span>
+                </div>
+                <div class="initiative-item d-flex justify-content-between align-items-center p-2 border-bottom">
+                    <span>👹 NPC 1</span>
+                    <span class="badge bg-warning">12</span>
+                </div>
+                <div class="initiative-item d-flex justify-content-between align-items-center p-2 border-bottom">
+                    <span>👤 Jogador 2</span>
+                    <span class="badge bg-primary">8</span>
+                </div>
+            `;
+        }, 1500);
+    </script>
+</body>
+</html>

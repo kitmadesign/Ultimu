@@ -1,0 +1,123 @@
+/* UI Enhancements: Toasts, Autosave badge, overlays, focus states */
+:root{
+  --toast-bg: #0f172a;
+  --toast-success: #10b981;
+  --toast-info: #3b82f6;
+  --toast-error: #ef4444;
+  --toast-text: #ffffff;
+  --badge-bg: rgba(0,0,0,0.75);
+  --badge-color: #fff;
+  --transition-fast: 200ms;
+}
+
+/* Toast container */
+.ui-toast-container{
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 99999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 360px;
+}
+
+/* Toast */
+.ui-toast {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 10px 14px;
+  border-radius: 10px;
+  color: var(--toast-text);
+  background: var(--toast-bg);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+  opacity: 0;
+  transform: translateY(-6px) scale(.98);
+  transition: opacity var(--transition-fast) ease, transform var(--transition-fast) ease;
+  font-size: 0.95rem;
+}
+.ui-toast.show { opacity: 1; transform: translateY(0) scale(1); }
+
+.ui-toast .icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: inline-grid;
+  place-items: center;
+  font-weight: 700;
+  color: white;
+  flex: 0 0 36px;
+}
+.ui-toast.success .icon { background: var(--toast-success); }
+.ui-toast.info .icon { background: var(--toast-info); }
+.ui-toast.error .icon { background: var(--toast-error); }
+
+.ui-toast .body {
+  flex: 1;
+}
+.ui-toast .title { font-weight: 600; margin-bottom: 2px; }
+.ui-toast .msg { font-size: 0.875rem; color: rgba(255,255,255,0.92); }
+
+/* Close */
+.ui-toast .close {
+  cursor: pointer;
+  opacity: .85;
+  padding: 4px;
+  border-radius: 6px;
+}
+.ui-toast .close:hover { opacity: 1; }
+
+/* Autosave badge */
+.ui-autosave-badge {
+  position: fixed;
+  top: 18px;
+  left: 18px;
+  z-index: 99999;
+  background: var(--badge-bg);
+  color: var(--badge-color);
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+  transition: transform var(--transition-fast) ease, opacity var(--transition-fast) ease;
+}
+.ui-autosave-badge.saving { transform: scale(1.03); }
+.ui-autosave-badge.saved { background: rgba(16,185,129,0.15); color: var(--badge-color); }
+.ui-autosave-badge.error { background: rgba(239,68,68,0.12); color: var(--badge-color); }
+
+/* Audio overlay (player) */
+.ui-audio-overlay {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  z-index: 999999;
+  background: white;
+  border-radius: 12px;
+  padding: 14px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+  width: min(520px, 92vw);
+  display: none;
+}
+.ui-audio-overlay.show { display: block; }
+
+.ui-audio-overlay .title { font-weight: 700; margin-bottom: 8px; }
+.ui-audio-overlay .controls { display:flex; gap:12px; align-items:center; }
+
+/* Focus improvements for accessibility */
+:focus {
+  outline: 3px solid rgba(59,130,246,0.18);
+  outline-offset: 2px;
+  transition: outline 120ms ease;
+}
+
+/* Small helper for mobile hit targets */
+.hit-target {
+  padding: 10px 14px;
+  border-radius: 10px;
+  touch-action: manipulation;
+}

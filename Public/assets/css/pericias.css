@@ -1,0 +1,1053 @@
+/* =========================================================
+   pericias-unificado.css - Sistema unificado de perícias
+   Combina todos os estilos dos arquivos:
+   - pericias-avancadas.css
+   - pericias-melhoradas.css 
+   - pericias-quadradas.css
+   - pericias-compactas.css
+   ========================================================= */
+
+/* ==================== VARIÁVEIS E ESTILOS GLOBAIS ==================== */
+:root {
+  --primary-color: #6f42c1;
+  --radius-sm: 0.375rem;
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --bg-0: #121212;
+  --surface: #1a1a1a;
+  --card: #1e1e1e;
+  --muted: #adb5bd;
+  --text: #e9ecef;
+  --primary-color: #6f42c1;
+  --success: #20c997;
+  --warning: #f59e0b;
+  --danger: #dc3545;
+  --info: #0dcaf0;
+  --bs-border-color: #495057;
+}
+
+/* ==================== CONTÊINERES PRINCIPAIS ==================== */
+
+/* CONTÊINER DE PERÍCIAS AVANÇADAS */
+.pericias-avancadas {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+/* GRID AJUSTÁVEL - MELHORADO */
+.pericias-grid-ajustavel {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 0.75rem;
+}
+
+/* GRID DE QUADRADOS COMPACTOS */
+.pericias-grid-quadrados {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+/* LAYOUT COMPACTO DE PERÍCIAS */
+.pericias-compactas {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 0.5rem;
+}
+
+/* ==================== GRUPOS DE PERÍCIAS ==================== */
+.grupo-pericias {
+    margin-bottom: 1.5rem;
+}
+
+.grupo-titulo {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--muted);
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.25rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* ==================== ITENS DE PERÍCIA ==================== */
+
+/* PERÍCIAS AVANÇADAS */
+.pericia-avancada {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem;
+    border-radius: var(--radius-sm);
+    background: rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+    cursor: grab;
+    border: 1px solid transparent;
+    margin-bottom: 0.25rem;
+}
+
+.pericia-avancada:hover {
+    background: rgba(111, 66, 193, 0.1);
+    border-color: var(--primary-color);
+    transform: translateY(-1px);
+}
+
+.pericia-avancada.arrastando {
+    opacity: 0.6;
+    cursor: grabbing;
+}
+
+/* ITEM DE PERÍCIA - DESIGN LIMPO SEM BORDAS */
+.pericia-item-moderno {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem;
+    border-radius: var(--radius-sm);
+    background: rgba(255, 255, 255, 0.03);
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+    gap: 0.75rem;
+    position: relative;
+}
+
+.pericia-item-moderno:hover {
+    background: rgba(111, 66, 193, 0.05);
+    border-color: rgba(111, 66, 193, 0.2);
+}
+
+/* QUADRADO DA PERÍCIA - COMPACTO */
+.pericia-quadrado {
+    position: relative;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-sm);
+    padding: 0.75rem 0.5rem;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.pericia-quadrado:hover {
+    border-color: rgba(111, 66, 193, 0.3);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* PERÍCIA COMPACTA */
+.pericia-compacta {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+    font-size: 0.85rem;
+    gap: 0.5rem;
+}
+
+.pericia-compacta:hover {
+    background: rgba(111, 66, 193, 0.05);
+    border-color: rgba(111, 66, 193, 0.3);
+}
+
+/* ==================== CONTROLES DE PERÍCIA ==================== */
+
+/* CONTROLES DE PERÍCIA AVANÇADA */
+.pericia-controles {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-right: 1rem;
+}
+
+.pericia-arrastar {
+    color: var(--muted);
+    cursor: grab;
+    padding: 0.25rem;
+}
+
+.pericia-arrastar:hover {
+    color: var(--text);
+}
+
+.pericia-checkbox {
+    transform: scale(1.2);
+}
+
+/* CONTROLE DE NÍVEL COMPACTO */
+.pericia-controle-moderno {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 120px;
+}
+
+.pericia-nivel-moderno {
+    width: 100px !important;
+    font-size: 0.75rem;
+    padding: 0.375rem 0.5rem;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    color: var(--text);
+    transition: all 0.2s ease;
+}
+
+.pericia-nivel-moderno:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(111, 66, 193, 0.1);
+}
+
+/* CONTROLES COMPACTOS */
+.pericia-nivel-compacto {
+    width: 90px !important;
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+}
+
+/* ==================== NOMES DE PERÍCIAS ==================== */
+
+.pericia-nome {
+    flex-grow: 1;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.pericia-nome-moderno {
+    flex: 1;
+    font-weight: 500;
+    font-size: 0.9rem;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.pericia-nome-compacto {
+    flex: 1;
+    font-weight: 500;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* NOME DA PERÍCIA COM SÍMBOLOS - COMPACTO */
+.pericia-nome-quadrado {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 0.25rem;
+    line-height: 1.1;
+    min-height: 1.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.1rem;
+}
+
+.pericia-simbolos {
+    display: flex;
+    gap: 0.1rem;
+    margin-left: 0.2rem;
+}
+
+.pericia-simbolo {
+    font-size: 0.6rem;
+    opacity: 0.6;
+    transition: opacity 0.2s ease;
+}
+
+.pericia-simbolo.ativo {
+    opacity: 0.8;
+}
+
+/* ==================== ATRIBUTOS ==================== */
+
+.pericia-atributo {
+    font-size: 0.8rem;
+    color: var(--muted);
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.25rem 0.5rem;
+    border-radius: 12px;
+    margin-right: 1rem;
+    min-width: 80px;
+    text-align: center;
+}
+
+.pericia-atributo-moderno {
+    font-size: 0.7rem;
+    color: var(--muted);
+    background: rgba(255, 255, 255, 0.08);
+    padding: 0.2rem 0.5rem;
+    border-radius: 8px;
+    min-width: 45px;
+    text-align: center;
+    font-weight: 600;
+}
+
+.pericia-atributo-compacto {
+    font-size: 0.7rem;
+    color: var(--muted);
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.2rem 0.5rem;
+    border-radius: 8px;
+    min-width: 70px;
+    text-align: center;
+}
+
+/* ATRIBUTO COMPACTO PARA QUADRADOS */
+.pericia-atributo-quadrado {
+    font-size: 0.65rem;
+    color: var(--muted);
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.15rem 0.4rem;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+/* ==================== MODIFICADORES ==================== */
+
+.pericia-modificador {
+    min-width: 50px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1rem;
+    color: var(--text);
+}
+
+.pericia-modificador-moderno {
+    min-width: 50px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 0.9rem;
+    padding: 0.375rem 0.5rem;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid transparent;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.pericia-modificador-moderno:hover {
+    background: rgba(111, 66, 193, 0.1);
+    border-color: rgba(111, 66, 193, 0.3);
+}
+
+.pericia-modificador-moderno:focus {
+    outline: none;
+    background: rgba(111, 66, 193, 0.15);
+    border-color: var(--primary-color);
+}
+
+.pericia-modificador-compacto {
+    font-weight: 700;
+    min-width: 40px;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+/* BÔNUS DA PERÍCIA - COMPACTO */
+.pericia-bonus {
+    font-size: 1.4rem;
+    font-weight: 800;
+    text-align: center;
+    margin: 0.25rem 0;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    padding: 0.15rem;
+    background: rgba(0, 0, 0, 0.2);
+    line-height: 1.2;
+}
+
+.pericia-bonus.editando {
+    border-color: var(--primary-color);
+    background: rgba(111, 66, 193, 0.1);
+}
+
+/* ==================== ÁREAS ESPECIAIS ==================== */
+
+/* CAMPO DE ÁREA ESPECIAL */
+.pericia-area-moderno {
+    width: 90px;
+    font-size: 0.7rem;
+    padding: 0.375rem 0.5rem;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    color: var(--text);
+    transition: all 0.2s ease;
+}
+
+.pericia-area-moderno:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(111, 66, 193, 0.1);
+}
+
+.pericia-area-moderno::placeholder {
+    color: var(--muted);
+    font-size: 0.65rem;
+}
+
+/* CAMPO DE ÁREA - MUITO COMPACTO */
+.pericia-area {
+    font-size: 0.65rem;
+    color: var(--muted);
+    text-align: center;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    padding: 0.15rem 0.3rem;
+    background: rgba(0, 0, 0, 0.15);
+    transition: all 0.2s ease;
+    margin-top: 0.1rem;
+    height: 20px;
+    max-height: 20px;
+}
+
+.pericia-area:focus {
+    border-color: var(--primary-color);
+    background: rgba(111, 66, 193, 0.08);
+    outline: none;
+}
+
+.pericia-area::placeholder {
+    color: var(--muted);
+    opacity: 0.6;
+    font-size: 0.6rem;
+}
+
+/* ==================== NÍVEIS DE TREINAMENTO ==================== */
+
+/* NÍVEIS AVANÇADOS */
+.pericia-avancada.treinada {
+    border-left: 4px solid #3b82f6;
+    background: rgba(59, 130, 246, 0.05);
+}
+
+.pericia-avancada.veterana {
+    border-left: 4px solid #8b5cf6;
+    background: rgba(139, 92, 246, 0.05);
+}
+
+.pericia-avancada.treinada .pericia-nome {
+    color: #3b82f6;
+    font-weight: 600;
+}
+
+.pericia-avancada.veterana .pericia-nome {
+    color: #8b5cf6;
+    font-weight: 700;
+}
+
+.pericia-avancada.veterana .pericia-modificador {
+    color: #8b5cf6;
+}
+
+/* CORES DOS NÍVEIS - SUTIS */
+.pericia-destreinada-moderno {
+    border-left: 3px solid #6b7280;
+}
+
+.pericia-treinada-moderno {
+    border-left: 3px solid #3b82f6;
+    background: rgba(59, 130, 246, 0.03);
+}
+
+.pericia-veterana-moderno {
+    border-left: 3px solid #8b5cf6;
+    background: rgba(139, 92, 246, 0.05);
+}
+
+.pericia-expert-moderno {
+    border-left: 3px solid #10b981;
+    background: rgba(16, 185, 129, 0.05);
+}
+
+/* CORES DOS NÍVEIS PARA QUADRADOS */
+.pericia-destreinada {
+    background: rgba(107, 114, 128, 0.08);
+    border-color: rgba(107, 114, 128, 0.2);
+}
+
+.pericia-destreinada .pericia-bonus {
+    color: #6b7280;
+}
+
+.pericia-treinada {
+    background: rgba(59, 130, 246, 0.08);
+    border-color: rgba(59, 130, 246, 0.2);
+}
+
+.pericia-treinada .pericia-bonus {
+    color: #3b82f6;
+}
+
+.pericia-veterana {
+    background: rgba(139, 92, 246, 0.08);
+    border-color: rgba(139, 92, 246, 0.2);
+}
+
+.pericia-veterana .pericia-bonus {
+    color: #8b5cf6;
+}
+
+.pericia-expert {
+    background: rgba(16, 185, 129, 0.08);
+    border-color: rgba(16, 185, 129, 0.2);
+}
+
+.pericia-expert .pericia-bonus {
+    color: #10b981;
+}
+
+/* INDICADORES VISUAIS POR COR - COMPACTOS */
+.pericia-compacta.destreinada {
+    border-left: 3px solid #6b7280;
+    background: rgba(107, 114, 128, 0.05);
+}
+
+.pericia-compacta.treinada {
+    border-left: 3px solid #3b82f6;
+    background: rgba(59, 130, 246, 0.08);
+}
+
+.pericia-compacta.veterana {
+    border-left: 3px solid #8b5cf6;
+    background: rgba(139, 92, 246, 0.1);
+}
+
+.pericia-compacta.expert {
+    border-left: 3px solid #10b981;
+    background: rgba(16, 185, 129, 0.1);
+}
+
+/* ==================== INDICADORES DE REGRAS ==================== */
+
+/* INDICADORES DE REGRAS - DISCRETOS */
+.pericia-penalidade-carga::before {
+    content: "⚖️";
+    margin-right: 0.25rem;
+    font-size: 0.7rem;
+    opacity: 0.7;
+}
+
+.pericia-requer-treinamento::after {
+    content: "📚";
+    margin-left: 0.25rem;
+    font-size: 0.7rem;
+    opacity: 0.7;
+}
+
+.pericia-area-especial::after {
+    content: "📝";
+    margin-left: 0.25rem;
+    font-size: 0.7rem;
+    opacity: 0.7;
+}
+
+/* BOTÃO DE STATUS - COMPACTO */
+.pericia-status-btn {
+    position: absolute;
+    top: 0.3rem;
+    right: 0.3rem;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(0, 0, 0, 0.4);
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.6rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.pericia-status-btn:hover {
+    background: rgba(111, 66, 193, 0.3);
+    border-color: var(--primary-color);
+    transform: scale(1.1);
+}
+
+/* ==================== TOOLTIPS ==================== */
+
+/* TOOLTIPS INFORMATIVOS */
+.pericia-tooltip {
+    position: relative;
+    cursor: help;
+}
+
+.pericia-tooltip:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--surface);
+    border: 1px solid var(--bs-border-color);
+    border-radius: 4px;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    z-index: 1000;
+    box-shadow: var(--shadow-sm);
+    color: var(--text);
+}
+
+/* TOOLTIP PARA ÁREAS ESPECIAIS */
+.pericia-area-tooltip {
+    position: relative;
+    cursor: help;
+}
+
+.pericia-area-tooltip:hover::after {
+    content: attr(data-area);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--surface);
+    border: 1px solid var(--bs-border-color);
+    border-radius: 4px;
+    padding: 0.5rem;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    z-index: 1000;
+    box-shadow: var(--shadow-sm);
+}
+
+/* ==================== SISTEMA DE BUSCA ==================== */
+
+/* SISTEMA DE BUSCA */
+.busca-pericias {
+    margin-bottom: 1rem;
+}
+
+.busca-pericias .form-control {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--bs-border-color);
+    color: var(--text);
+    font-size: 0.9rem;
+}
+
+.busca-pericias .form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(111, 66, 193, 0.1);
+}
+
+/* CONTADOR DE PERÍCIAS */
+.contador-pericias {
+    font-size: 0.8rem;
+    color: var(--muted);
+    text-align: right;
+    margin-bottom: 0.5rem;
+}
+
+/* ==================== ZONA DE SOLTURA ==================== */
+
+/* ZONA DE SOLTURA */
+.zona-soltura {
+    border: 2px dashed var(--primary-color);
+    background: rgba(111, 66, 193, 0.1);
+    border-radius: var(--radius-sm);
+    padding: 1rem;
+    text-align: center;
+    color: var(--muted);
+    margin: 0.5rem 0;
+    transition: all 0.3s ease;
+}
+
+.zona-soltura.drag-over {
+    background: rgba(111, 66, 193, 0.2);
+    border-color: var(--primary-color);
+}
+
+/* ==================== SISTEMA DE DEFESA ==================== */
+
+/* SISTEMA DE DEFESA */
+.defesa-sistema {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-sm);
+    padding: 1.5rem;
+}
+
+.defesa-valor .input-group-lg .form-control {
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-align: center;
+    background: rgba(111, 66, 193, 0.1);
+    border-color: var(--primary-color);
+}
+
+.calculo-defesa {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: var(--radius-sm);
+    padding: 1rem;
+}
+
+.calculo-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.25rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.calculo-item.total {
+    border-top: 2px solid var(--primary-color);
+    border-bottom: none;
+    font-weight: 700;
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+}
+
+/* EQUIPAMENTOS DE PROTEÇÃO */
+.equipamento-protecao {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+    font-size: 0.85rem;
+}
+
+.equipamento-protecao .protecao-valor {
+    background: var(--primary-color);
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.75rem;
+}
+
+/* ==================== LEGENDAS E REGRAS ==================== */
+
+/* LEGENDA DAS REGRAS - COMPACTA */
+.legenda-pericias {
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: var(--radius-sm);
+    padding: 0.75rem;
+    margin-top: 1rem;
+    border-left: 2px solid var(--primary-color);
+}
+
+.legenda-titulo {
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+    color: var(--text);
+}
+
+.legenda-itens {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0.4rem;
+}
+
+.legenda-item {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.7rem;
+    color: var(--muted);
+}
+
+.legenda-simbolo {
+    font-size: 0.7rem;
+    min-width: 14px;
+    text-align: center;
+    opacity: 0.8;
+}
+
+/* INDICAÇÕES DE REGRAS - TEXTO DISCRETO */
+.regras-pericias {
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin-top: 1rem;
+    padding: 0.75rem;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: var(--radius-sm);
+    border-left: 3px solid var(--muted);
+}
+
+.regras-lista {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.regra-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.7rem;
+}
+
+.regra-icone {
+    font-size: 0.8rem;
+    opacity: 0.7;
+}
+
+/* ==================== ESTADOS ESPECIAIS ==================== */
+
+/* FILTROS */
+.pericia-avancada.oculta {
+    display: none;
+}
+
+/* ESTADOS ESPECIAIS */
+.pericia-editando .pericia-modificador-moderno {
+    background: rgba(111, 66, 193, 0.2);
+    border-color: var(--primary-color);
+}
+
+.pericia-com-area .pericia-area-moderno {
+    background: rgba(16, 185, 129, 0.1);
+    border-color: rgba(16, 185, 129, 0.3);
+}
+
+/* ESTADOS DE FOCO MELHORADOS */
+.pericia-item-moderno:focus-within {
+    background: rgba(111, 66, 193, 0.08);
+    border-color: rgba(111, 66, 193, 0.3);
+}
+
+.pericia-quadrado:focus-within {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(111, 66, 193, 0.15);
+}
+
+/* ==================== ANIMAÇÕES ==================== */
+
+/* ANIMAÇÕES SUAVES */
+@keyframes destaquePericia {
+    0% { background: rgba(111, 66, 193, 0.1); }
+    100% { background: rgba(255, 255, 255, 0.03); }
+}
+
+.pericia-destaque {
+    animation: destaquePericia 1s ease;
+}
+
+@keyframes pulseStatus {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.pericia-mudando-status {
+    animation: pulseStatus 0.2s ease;
+}
+
+/* ==================== RESPONSIVIDADE ==================== */
+
+/* RESPONSIVIDADE PARA PERÍCIAS AVANÇADAS */
+@media (max-width: 768px) {
+    .pericia-avancada {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+    
+    .pericia-controles {
+        margin-right: 0;
+        order: 1;
+    }
+    
+    .pericia-nome {
+        order: 2;
+        flex-basis: 100%;
+    }
+    
+    .pericia-atributo {
+        order: 3;
+        margin-right: 0;
+    }
+    
+    .pericia-modificador {
+        order: 4;
+        margin-left: auto;
+    }
+}
+
+/* RESPONSIVIDADE MELHORADA */
+@media (max-width: 768px) {
+    .pericias-grid-ajustavel {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+    
+    .pericia-item-moderno {
+        padding: 0.625rem;
+        gap: 0.5rem;
+    }
+    
+    .pericia-controle-moderno {
+        min-width: 100px;
+    }
+    
+    .pericia-nivel-moderno {
+        width: 90px !important;
+    }
+    
+    .pericia-area-moderno {
+        width: 80px;
+    }
+    
+    .pericia-modificador-moderno {
+        min-width: 45px;
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .pericia-item-moderno {
+        flex-wrap: wrap;
+    }
+    
+    .pericia-controle-moderno {
+        order: 1;
+        flex-basis: 100%;
+        margin-bottom: 0.5rem;
+    }
+    
+    .pericia-nome-moderno {
+        order: 2;
+        flex-basis: calc(60% - 0.5rem);
+    }
+    
+    .pericia-atributo-moderno {
+        order: 3;
+        flex-basis: calc(40% - 0.5rem);
+    }
+    
+    .pericia-modificador-moderno {
+        order: 4;
+        flex-basis: 100%;
+        margin-top: 0.5rem;
+    }
+    
+    .pericia-area-moderno {
+        order: 5;
+        flex-basis: 100%;
+        margin-top: 0.5rem;
+    }
+}
+
+/* RESPONSIVIDADE PARA TELAS PEQUENAS - QUADRADOS */
+@media (max-width: 768px) {
+    .pericias-grid-quadrados {
+        grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+        gap: 0.5rem;
+    }
+    
+    .pericia-quadrado {
+        padding: 0.5rem 0.4rem;
+        min-height: 90px;
+    }
+    
+    .pericia-bonus {
+        font-size: 1.2rem;
+    }
+    
+    .pericia-nome-quadrado {
+        font-size: 0.75rem;
+        min-height: 1.6rem;
+    }
+    
+    .pericia-area {
+        font-size: 0.6rem;
+        height: 18px;
+        max-height: 18px;
+    }
+}
+
+@media (max-width: 480px) {
+    .pericias-grid-quadrados {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.4rem;
+    }
+    
+    .pericia-quadrado {
+        min-height: 85px;
+        padding: 0.4rem 0.3rem;
+    }
+    
+    .legenda-itens {
+        grid-template-columns: 1fr;
+    }
+    
+    .pericia-bonus {
+        font-size: 1.1rem;
+    }
+}
+
+/* RESPONSIVIDADE PARA PERÍCIAS COMPACTAS */
+@media (max-width: 768px) {
+    .pericias-compactas {
+        grid-template-columns: 1fr;
+    }
+    
+    .pericia-compacta {
+        padding: 0.75rem;
+        gap: 0.75rem;
+    }
+    
+    .pericia-nivel-compacto {
+        width: 80px !important;
+    }
+    
+    .defesa-sistema {
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .pericia-compacta {
+        flex-wrap: wrap;
+    }
+    
+    .pericia-nome-compacto {
+        flex-basis: 100%;
+        order: 1;
+        margin-top: 0.25rem;
+    }
+    
+    .pericia-nivel-compacto {
+        order: 2;
+    }
+    
+    .pericia-atributo-compacto {
+        order: 3;
+        margin-left: auto;
+    }
+    
+    .pericia-modificador-compacto {
+        order: 4;
+    }
+}
+
+/* ==================== TRANSITIONS SUAVES ==================== */
+
+/* TRANSITIONS SUAVES */
+.pericia-item-moderno,
+.pericia-nivel-moderno,
+.pericia-modificador-moderno,
+.pericia-area-moderno {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.pericia-quadrado,
+.pericia-bonus,
+.pericia-status-btn {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}

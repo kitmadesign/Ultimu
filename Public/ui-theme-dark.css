@@ -1,0 +1,169 @@
+/* ui-theme-dark.css — Tema escuro abrangente: sobrescreve variáveis e componentes principais
+   Cole este arquivo em public/ui-theme-dark.css e selecione pelo theme-switcher.
+*/
+
+/* Redefine variáveis CSS usadas por style.css para garantir overrides */
+:root{
+  --bg-0: #05060a;
+  --surface: #07101a;
+  --card: rgba(255,255,255,0.03);
+  --muted: #9aa6b2;
+  --text: #e6eef6;
+  --primary-600: #2b6cff;
+  --primary-500: #3b82f6;
+  --accent: #9b7cff;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+
+  /* spacing / radii kept from main theme for compatibility */
+  --radius: 12px;
+  --radius-sm: 8px;
+}
+
+/* Page background and base text color */
+html, body {
+  height: 100%;
+  background: radial-gradient(800px 400px at 10% 20%, rgba(59,130,246,0.04), transparent 6%),
+              linear-gradient(180deg, #02040a 0%, var(--surface) 100%) !important;
+  color: var(--text) !important;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+/* Container surfaces */
+.container, .container-compact {
+  background: transparent !important;
+}
+
+/* Card overrides */
+.card, .card-compacto {
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)) !important;
+  border: 1px solid rgba(255,255,255,0.04) !important;
+  color: var(--text) !important;
+  box-shadow: 0 18px 50px rgba(2,8,23,0.6) !important;
+}
+
+/* Card headers */
+.card-header {
+  background: linear-gradient(180deg, rgba(59,130,246,0.02), transparent) !important;
+  border-bottom-color: rgba(255,255,255,0.03) !important;
+}
+
+/* Headings */
+h1, h2, h3, .card-title {
+  color: var(--text) !important;
+}
+
+/* Buttons - primary / success / ghost / small */
+.btn {
+  color: var(--text) !important;
+  border: 1px solid rgba(255,255,255,0.06) !important;
+  background: rgba(255,255,255,0.02) !important;
+  box-shadow: none !important;
+}
+.btn:hover { transform: translateY(-2px) !important; }
+
+.btn-primary {
+  background: linear-gradient(90deg, var(--primary-500), var(--primary-600)) !important;
+  color: #fff !important;
+  border: none !important;
+  box-shadow: 0 10px 36px rgba(59,130,246,0.1) !important;
+}
+.btn-success {
+  background: linear-gradient(90deg, #0fbf86, var(--success)) !important;
+  color: #021214 !important;
+}
+.btn-ghost {
+  background: transparent !important;
+  border-color: rgba(255,255,255,0.06) !important;
+  color: var(--text) !important;
+}
+
+/* Inputs / selects / textareas */
+.form-input, input[type="number"], textarea, select {
+  background: rgba(255,255,255,0.02) !important;
+  border: 1px solid rgba(255,255,255,0.04) !important;
+  color: var(--text) !important;
+  box-shadow: none !important;
+}
+
+/* Attribute cards & values */
+.attribute-card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00)) !important;
+  border: 1px solid rgba(255,255,255,0.03) !important;
+  color: var(--text) !important;
+}
+.attribute-value { color: var(--text) !important; }
+
+/* Resource bars & progress */
+.resource-bar { background: rgba(255,255,255,0.02) !important; height: 10px !important; border-radius: 999px !important; }
+.resource-progress {
+  background: linear-gradient(90deg, var(--primary-500), var(--accent)) !important;
+  transition: width 320ms ease !important;
+}
+
+/* Pericias list: stronger contrast and hover */
+.pericia-item {
+  background: linear-gradient(180deg, rgba(255,255,255,0.01), transparent) !important;
+  border: 1px solid rgba(255,255,255,0.02) !important;
+  color: var(--text) !important;
+}
+.pericia-item:hover {
+  background: rgba(59,130,246,0.04) !important;
+  transform: translateY(-2px) !important;
+}
+
+/* Nivel treinamento visuals */
+.nivel-treinamento { background: rgba(255,255,255,0.06) !important; }
+.nivel-treinamento.ativo { background: var(--success) !important; }
+.nivel-treinamento.veterano { background: var(--warning) !important; }
+.nivel-treinamento.expert { background: var(--primary-500) !important; }
+
+/* Modal rolamento more visible */
+.modal-rolagem .modal-rolagem-conteudo {
+  background: linear-gradient(180deg,#06111a,#07121e) !important;
+  color: var(--text) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 30px 80px rgba(2,8,23,0.7) !important;
+}
+
+/* Combat list - clearer HP bar */
+.combatente-item { background: rgba(255,255,255,0.02) !important; border: 1px solid rgba(255,255,255,0.03) !important; }
+.combatente-item.turno-ativo {
+  box-shadow: 0 12px 36px rgba(59,130,246,0.06) !important;
+  transform: scale(1.01) !important;
+  border-color: rgba(59,130,246,0.12) !important;
+}
+.hp-barra { background: rgba(255,255,255,0.02) !important; }
+.hp-barra-progresso { background: linear-gradient(90deg,#10b981,#34d399) !important; }
+
+/* Status badge */
+.status-badge { background: rgba(255,255,255,0.03) !important; color: var(--text) !important; }
+
+/* Mobile action bar - dark surface */
+.mobile-action-bar {
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)) !important;
+  box-shadow: 0 12px 30px rgba(2,8,23,0.6) !important;
+}
+
+/* UI enhancements compatibility */
+.ui-audio-overlay { background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)) !important; color: var(--text) !important; }
+
+/* Make link overrides more specific to ensure they win */
+.container .card,
+.container-compact .card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)) !important;
+  border: 1px solid rgba(255,255,255,0.04) !important;
+}
+
+/* Ensure theme affects pseudo-elements if needed */
+*::selection { background: rgba(59,130,246,0.16) !important; color: var(--text) !important; }
+
+/* Fallback for any leftover bright elements */
+.bg-white, .bg-light { background-color: transparent !important; color: var(--text) !important; }
+
+/* Minor tweaks for readability on small screens */
+@media (max-width: 820px) {
+  .card { padding: 14px !important; }
+  .attribute-value { font-size: 1.4rem !important; }
+}

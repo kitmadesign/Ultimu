@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acesso Mestre - Sistema RPG</title>
+   <link rel="stylesheet" href="../assets/css/global.css">
+</head>
+<body>
+    <div class="container">
+        <div class="card" style="max-width: 400px; margin: 100px auto;">
+            <h2 class="text-center">👑 Acesso Mestre</h2>
+            <p class="text-center" style="color: var(--muted); margin-bottom: 2rem;">
+                Painel exclusivo do Mestre
+            </p>
+
+            <div class="form-group">
+                <label class="form-label">Usuário Mestre</label>
+                <input type="text" id="mestre-username" class="form-input" placeholder="mestre" value="mestre">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Senha Mestre</label>
+                <input type="password" id="mestre-password" class="form-input" placeholder="075107" value="075107">
+            </div>
+            
+            <button class="btn btn-primary w-full" onclick="fazerLoginMestre()">
+                🔐 Acessar Painel do Mestre
+            </button>
+
+            <div class="text-center mt-4">
+                <a href="/login.html" class="btn btn-ghost btn-sm">
+                    ← Voltar para Login de Jogador
+                </a>
+            </div>
+
+            <div id="mensagem" style="display: none; margin-top: 1rem; padding: 10px; border-radius: 8px;"></div>
+        </div>
+    </div>
+
+    <script>
+        async function fazerLoginMestre() {
+            const username = document.getElementById('mestre-username').value;
+            const password = document.getElementById('mestre-password').value;
+            const mensagem = document.getElementById('mensagem');
+
+            try {
+                const response = await fetch('/api/login-mestre', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username, password })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    // Login bem-sucedido - salvar token JWT
+                    localStorage.setItem('rpg_token', data.token);
+                    localStorage.setItem('rpg_user_role', 'mestre');
+                    localStorage.setItem('rpg_user_name', data.user.displayName);
+                    
+                    mensagem.style.display = 'block';
+                    mensagem.style.background = 'var(--success)';
+                    mensagem.style.color = 'white';
+                    mensagem.textContent = '✅ Acesso concedido! Redirecionando...';
+                    
+                    setTimeout(() => {
+                        window.location.href = '/mestre-dashboard.html';
+                    }, 1000);
+                } else {
+                    mensagem.style.display = 'block';
+                    mensagem.style.background = 'var(--danger)';
+                    mensagem.style.color = 'white';
+                    mensagem.textContent = '❌ ' + (data.error || 'Credenciais inválidas');
+                }
+            } catch (error) {
+                console.error('Erro no login:', error);
+                mensagem.style.display = 'block';
+                mensagem.style.background = 'var(--danger)';
+                mensagem.style.color = 'white';
+                mensagem.textContent = '❌ Erro de conexão com o servidor';
+            }
+        }
+
+        // Suporte a Enter
+        document.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                fazerLoginMestre();
+            }
+        });
+    </script>
+</body>
+</html>

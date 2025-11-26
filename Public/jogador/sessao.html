@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ficha de Personagem - Ordem Paranormal</title>
+    
+    <!-- Bootstrap 5.3.2 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- CSS Corrigido -->
+    <link rel="stylesheet" href="../assets/css/global.css">
+       <link rel="stylesheet" href="../assets/css/pericias.css">
+       <link rel="stylesheet" href="../assets/css/pericias-fix.css">
+    
+    
+  
+    <style>
+        /* Estilos específicos da sessão */
+        .container-ficha {
+            display: flex;
+            min-height: calc(100vh - 56px);
+        }
+        
+        .painel-lateral {
+            width: 240px;
+            background: var(--surface);
+            border-right: 1px solid var(--bs-border-color);
+            height: calc(100vh - 56px);
+            position: fixed;
+            left: 0;
+            top: 56px;
+        }
+        
+        .conteudo-dinamico {
+            flex: 1;
+            padding: 1.5rem;
+            margin-left: 240px;
+            width: calc(100% - 240px);
+        }
+        
+        @media (max-width: 768px) {
+            .painel-lateral {
+                transform: translateX(-100%);
+                width: 280px;
+            }
+            
+            .painel-lateral.aberta {
+                transform: translateX(0);
+            }
+            
+            .conteudo-dinamico {
+                margin-left: 0;
+                width: 100%;
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body data-bs-theme="dark">
+    <!-- NAVEGAÇÃO SUPERIOR -->
+    <nav class="navbar navbar-expand-md bg-body p-0 fixed-top border-bottom border-secondary font3">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">FichasOP</a>
+            <div class="d-flex">
+                <button class="btn btn-sm btn-outline me-2" id="menu-mobile">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <a href="dashboard.html" class="btn btn-sm btn-primary">
+                    <i class="fas fa-grid"></i> Dashboard
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ESPAÇO PARA A NAVBAR NÃO COBRIR CONTEÚDO -->
+    <div style="height: 56px;"></div>
+
+    <!-- CONTAINER PRINCIPAL DA FICHA -->
+    <div class="container-ficha">
+        
+        <!-- PAINEL LATERAL COM AS ABAS -->
+        <div class="painel-lateral" id="painel-lateral">
+            <div class="lista-abas">
+                <div class="aba-item ativa" data-aba="principal">
+                    <i class="fas fa-home"></i>
+                    <span>Principal</span>
+                </div>
+                <div class="aba-item" data-aba="historia">
+                    <i class="fas fa-book"></i>
+                    <span>História</span>
+                </div>
+                <div class="aba-item" data-aba="descricao">
+                    <i class="fas fa-user"></i>
+                    <span>Descrição</span>
+                </div>
+                <div class="aba-item" data-aba="anotacoes">
+                    <i class="fas fa-edit"></i>
+                    <span>Anotações</span>
+                </div>
+                <div class="aba-item" data-aba="mestre">
+                    <i class="fas fa-hat-wizard"></i>
+                    <span>Mestre</span>
+                </div>
+                <div class="aba-item" data-aba="acoes">
+                    <i class="fas fa-history"></i>
+                    <span>Ações</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- CONTEÚDO DINÂMICO (muda conforme a aba selecionada) -->
+        <div class="conteudo-dinamico">
+            
+            <!-- ABA PRINCIPAL COM MELHORIAS DA FASE 2 -->
+<div class="cabecalho-aba">
+    <h2><i class="fas fa-home"></i> Ficha do Personagem</h2>
+    <div class="d-flex gap-2 align-items-center">
+        <!-- BOTÃO LAYOUT -->
+        <div class="dropdown">
+            <button class="btn btn-sm btn-outline dropdown-toggle" type="button" 
+                    id="dropdownLayout" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fas fa-palette"></i> Layout
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownLayout">
+                <li><h6 class="dropdown-header">Modo de Layout</h6></li>
+                <li>
+                    <a class="dropdown-item layout-option active" href="#" data-layout="auto">
+                        <i class="fas fa-th"></i> Auto
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item layout-option" href="#" data-layout="colunas">
+                        <i class="fas fa-columns"></i> Colunas
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item layout-option" href="#" data-layout="denso">
+                        <i class="fas fa-compress"></i> Denso
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item layout-option" href="#" data-layout="horizontal">
+                        <i class="fas fa-bars"></i> Horizontal
+                    </a>
+                </li>
+                <li><hr class="dropdown-divider"></li>
+                <li>
+                    <a class="dropdown-item text-warning" href="#" id="btn-reset-layout">
+                        <i class="fas fa-redo"></i> Resetar Layout
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- BOTÃO RECOLHER/EXPANDIR -->
+        <button class="btn btn-sm btn-outline" id="toggle-todas-secoes">
+            <i class="fas fa-compress"></i> Recolher Tudo
+        </button>
+
+        <!-- BOTÃO SALVAR -->
+        <button class="btn btn-sm btn-primary" id="salvar-ficha">
+            <i class="fas fa-save"></i> Salvar
+        </button>
+    </div>
+</div>
+
+    <!-- CABEÇALHO DO PERSONAGEM EXPANDIDO -->
+<div class="card mb-4" data-card-id="info-basicas" data-card-fixo="true">
+    <div class="card-body">
+        <div class="row g-3">
+            <!-- LINHA 1: NOME E INFOS BÁSICAS -->
+            <div class="col-md-6">
+                <label class="form-label">Nome do Personagem</label>
+                <input type="text" class="form-control" id="nome-personagem" placeholder="Ex: Arthur Cervero">
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">Jogador</label>
+                <input type="text" class="form-control" id="nome-jogador" placeholder="Seu nome">
+            </div>
+            <div class="col-md-3">
+                <div class="row g-2">
+                    <div class="col-6">
+                        <label class="form-label">NEX</label>
+                        <div class="input-group">
+                            <input type="number" class="form-control" id="nex" min="5" max="99" value="5">
+                            <span class="input-group-text">%</span>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <label class="form-label">Nível</label>
+                        <input type="number" class="form-control" id="nivel" min="1" max="20" value="1">
+                    </div>
+                </div>
+            </div>
+
+            <!-- LINHA 2: CLASSE, ORIGEM, PATENTE - AGORA EDITÁVEIS -->
+<div class="col-md-4">
+    <label class="form-label">Classe</label>
+    <div class="select-editavel">
+        <select class="form-select" id="classe">
+            <option value="">Selecione uma classe</option>  
+            <option value="custom">Personalizada</option>
+            <option value="Combatente">Combatente</option>
+            <option value="Especialista">Especialista</option>
+            <option value="Ocultista">Ocultista</option>
+        </select>
+        <input type="text" class="input-editavel" id="classe-input" 
+               placeholder="Digite a classe personalizada...">
+    </div>
+</div>
+
+<div class="col-md-4">
+    <label class="form-label">Origem</label>
+    <div class="select-editavel">
+        <select class="form-select" id="origem">
+            <option value="">Selecione uma origem</option>  
+            <option value="custom">Personalizada</option>
+            <option value="Acadêmico">Acadêmico</option>
+            <option value="Agente de Saúde">Agente de Saúde</option>
+            <!-- ... outras opções ... -->
+        </select>
+        <input type="text" class="input-editavel" id="origem-input" 
+               placeholder="Digite a origem personalizada...">
+    </div>
+</div>
+
+<div class="col-md-4">
+    <label class="form-label">Patente</label>
+    <div class="select-editavel">
+        <select class="form-select" id="patente">
+            <option value="">Selecione uma patente</option>
+            <option value="custom">Personalizada</option>
+            <option value="Agente">Agente</option>
+            <option value="Agente Especial">Agente Especial</option>
+            <!-- ... outras opções ... -->
+        </select>
+        <input type="text" class="input-editavel" id="patente-input" 
+               placeholder="Digite a patente personalizada...">
+    </div>
+</div>
+            <!-- LINHA 3: TRILHA, DIVINDADE, AFILIAÇÃO -->
+            <div class="col-md-4">
+                <label class="form-label">Trilha</label>
+                <input type="text" class="form-control" id="trilha" placeholder="Trilha de classe">
+            </div>
+
+            <div class="col-md-4">
+                <label class="form-label">Elemento</label>
+                <input type="text" class="form-control" id="divindade" placeholder="Elemento">
+            </div>
+
+
+            <div class="col-md-4">
+                <label class="form-label">Afiliação</label>
+                <input type="text" class="form-control" id="afiliacao" placeholder="Organização ou grupo">
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- RECURSOS COMPACTOS (MELHORIA 1) -->
+   <!-- RECURSOS COMPACTOS CORRIGIDOS -->
+    <div class="card mb-4 seccionavel" data-secao="recursos" data-card-id="recursos">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">
+                <i class="fas fa-heart"></i> Recursos
+            </h5>
+            <div class="controles-secao">
+                <button class="btn btn-sm btn-outline toggle-secao">
+                    <i class="fas fa-minus"></i>
+                </button>
+            </div>
+        </div>
+        <div class="card-body conteudo-secao">
+            <div class="recursos-grid">
+                <!-- PV -->
+                <div class="recurso-card">
+                    <div class="recurso-header">
+                        <span class="recurso-icon">❤️</span>
+                        <span class="recurso-name">Pontos de Vida</span>
+                    </div>
+                    <div class="recurso-values">
+                        <input type="number" class="recurso-current" id="pv-atual" value="12" min="0">
+                        <span class="recurso-separator">/</span>
+                        <input type="number" class="recurso-max" id="pv-max" value="12" min="1">
+                    </div>
+                    <div class="recurso-bar">
+                        <div class="recurso-fill" id="barra-pv" style="width: 100%"></div>
+                    </div>
+                    <div class="recurso-status" id="status-pv">🟢 Normal</div>
+                </div>
+
+                <!-- SANIDADE -->
+                <div class="recurso-card">
+                    <div class="recurso-header">
+                        <span class="recurso-icon">🧠</span>
+                        <span class="recurso-name">Sanidade</span>
+                    </div>
+                    <div class="recurso-values">
+                        <input type="number" class="recurso-current" id="san-atual" value="12" min="0">
+                        <span class="recurso-separator">/</span>
+                        <input type="number" class="recurso-max" id="san-max" value="12" min="1">
+                    </div>
+                    <div class="recurso-bar">
+                        <div class="recurso-fill" id="barra-san" style="width: 100%"></div>
+                    </div>
+                    <div class="recurso-status" id="status-san">🟢 Estável</div>
+                </div>
+
+                <!-- PE -->
+                <div class="recurso-card">
+                    <div class="recurso-header">
+                        <span class="recurso-icon">⚡</span>
+                        <span class="recurso-name">Pontos de Esforço</span>
+                    </div>
+                    <div class="recurso-values">
+                        <input type="number" class="recurso-current" id="pe-atual" value="1" min="0">
+                        <span class="recurso-separator">/</span>
+                        <input type="number" class="recurso-max" id="pe-max" value="1" min="1">
+                    </div>
+                    <div class="recurso-bar">
+                        <div class="recurso-fill" id="barra-pe" style="width: 100%"></div>
+                    </div>
+                    <div class="recurso-status" id="status-pe">🟢 Disponível</div>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- SISTEMA DE DEFESA -->
+<div class="card mb-4 seccionavel" data-secao="defesa" data-card-id="defesa">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">
+            <i class="fas fa-shield-alt"></i> Defesa
+        </h5>
+        <div class="controles-secao">
+            <button class="btn btn-sm btn-outline toggle-secao">
+                <i class="fas fa-minus"></i>
+            </button>
+        </div>
+    </div>
+    <div class="card-body conteudo-secao">
+        <div class="defesa-sistema">
+            <div class="defesa-valor">
+                <label class="form-label">Defesa Total</label>
+                <div class="input-group input-group-lg">
+                    <input type="number" class="form-control defesa-total" id="defesa-total" value="10" min="0" readonly>
+                    <span class="input-group-text">+ Proteção: <span id="protecao-total">0</span></span>
+                </div>
+                <small class="text-muted">Base 10 + Agilidade + Proteção de equipamentos</small>
+            </div>
+            
+            <div class="defesa-detalhes mt-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Equipamentos de Proteção</h6>
+                        <div id="equipamentos-protecao">
+                            <!-- Itens com proteção serão listados aqui -->
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Detalhes do Cálculo</h6>
+                        <div class="calculo-defesa">
+                            <div class="calculo-item">
+                                <span>Base:</span>
+                                <span>10</span>
+                            </div>
+                            <div class="calculo-item">
+                                <span>Agilidade:</span>
+                                <span id="defesa-agilidade">+0</span>
+                            </div>
+                            <div class="calculo-item">
+                                <span>Proteção:</span>
+                                <span id="defesa-protecao">+0</span>
+                            </div>
+                            <div class="calculo-item total">
+                                <span><strong>Total:</strong></span>
+                                <span><strong id="defesa-final">10</strong></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <!-- ATRIBUTOS CORRIGIDOS (SISTEMA D20) -->
+    <div class="card mb-4 seccionavel" data-secao="atributos" data-card-id="atributos">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">
+                <i class="fas fa-dice-d20"></i> Atributos
+            </h5>
+            <div class="controles-secao">
+                <small class="text-muted me-2">Sistema: Maior D20</small>
+                <button class="btn btn-sm btn-outline toggle-secao">
+                    <i class="fas fa-minus"></i>
+                </button>
+            </div>
+        </div>
+        <div class="card-body conteudo-secao">
+            <div class="atributos-grid">
+                <div class="atributo-card" data-atributo="forca">
+                    <label class="atributo-label">Força</label>
+                    <input type="number" class="atributo-value" id="forca" min="0" max="5" value="1">
+                    <div class="atributo-info">
+                        <span class="dados-info" id="dados-forca">🎲 1d20</span>
+                        <button class="btn-rolar-atributo" data-atributo="forca" title="Rolar atributo">
+                            <i class="fas fa-dice"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="atributo-card" data-atributo="agilidade">
+                    <label class="atributo-label">Agilidade</label>
+                    <input type="number" class="atributo-value" id="agilidade" min="0" max="5" value="1">
+                    <div class="atributo-info">
+                        <span class="dados-info" id="dados-agilidade">🎲 1d20</span>
+                        <button class="btn-rolar-atributo" data-atributo="agilidade" title="Rolar atributo">
+                            <i class="fas fa-dice"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="atributo-card" data-atributo="intelecto">
+                    <label class="atributo-label">Intelecto</label>
+                    <input type="number" class="atributo-value" id="intelecto" min="0" max="5" value="1">
+                    <div class="atributo-info">
+                        <span class="dados-info" id="dados-intelecto">🎲 1d20</span>
+                        <button class="btn-rolar-atributo" data-atributo="intelecto" title="Rolar atributo">
+                            <i class="fas fa-dice"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="atributo-card" data-atributo="vigor">
+                    <label class="atributo-label">Vigor</label>
+                    <input type="number" class="atributo-value" id="vigor" min="0" max="5" value="1">
+                    <div class="atributo-info">
+                        <span class="dados-info" id="dados-vigor">🎲 1d20</span>
+                        <button class="btn-rolar-atributo" data-atributo="vigor" title="Rolar atributo">
+                            <i class="fas fa-dice"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="atributo-card" data-atributo="presenca">
+                    <label class="atributo-label">Presença</label>
+                    <input type="number" class="atributo-value" id="presenca" min="0" max="5" value="1">
+                    <div class="atributo-info">
+                        <span class="dados-info" id="dados-presenca">🎲 1d20</span>
+                        <button class="btn-rolar-atributo" data-atributo="presenca" title="Rolar atributo">
+                            <i class="fas fa-dice"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   <!-- PERÍCIAS COMPACTAS CORRIGIDAS -->
+<div class="card mb-4 seccionavel" data-secao="pericias" data-card-id="pericias">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">
+            <i class="fas fa-list-check"></i> Perícias
+        </h5>
+         <div class="controles-card">
+            <span class="icone-arrastar">
+                <i class="fas fa-grip-vertical"></i>
+            </span>
+            <button class="toggle-secao">
+                <i class="fas fa-minus"></i>
+            </button>
+        </div>
+    </div>
+<div class="card-body">
+  <div class="filtro-pericias-container">
+    <div class="busca-pericias" style="min-width:160px;">
+      <div class="input-group">
+        <span class="input-group-text"><i class="fas fa-search"></i></span>
+        <input type="text" id="busca-pericia" class="form-control" placeholder="Buscar perícia...">
+      </div>
+    </div>
+
+    <div class="filtro-pericias">
+      <label for="filtro-pericias" class="form-label visually-hidden">Filtrar</label>
+      <select id="filtro-pericias" class="form-select">
+        <option value="todas">Todas</option>
+        <option value="destreinada">Destreinada</option>
+        <option value="treinada">Treinada</option>
+        <option value="veterana">Veterana</option>
+        <option value="expert">Expert</option>
+      </select>
+    </div>
+
+    <div class="contador-pericias" id="contador-pericias" style="opacity:0.7;font-size:0.78rem;color:var(--muted);margin-left:auto;">
+      Mostrando 0 de 0 perícias
+    </div>
+  </div>
+
+  <!-- Container onde o JS renderiza a grid (deixe este ID para o script) -->
+  <div id="pericias-container" class="pericias-container compacto">
+    <div id="pericias-grid" class="pericias-grid-quadrados"></div>
+  </div>
+</div>
+
+<div class="card-body conteudo-secao">
+    <div class="pericias-container-unificado">
+        <!-- conteúdo das perícias aqui -->
+    </div>
+</div>
+
+    </div>
+</div>
+    <!-- HABILIDADES E PODERES -->
+    <div class="card mb-4 seccionavel" data-secao="habilidades" data-card-id="habilidades">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">
+                <i class="fas fa-fire"></i> Habilidades e Poderes
+            </h5>
+            <div class="controles-secao">
+                <button class="btn btn-sm btn-primary" id="add-habilidade">
+                    <i class="fas fa-plus"></i> Nova
+                </button>
+                <button class="btn btn-sm btn-outline toggle-secao">
+                    <i class="fas fa-minus"></i>
+                </button>
+            </div>
+        </div>
+        <div class="card-body conteudo-secao">
+            <div id="habilidades-container">
+                <div class="vazio">
+                    <i class="fas fa-fire fa-2x mb-3"></i>
+                    <p>Nenhuma habilidade ou poder adicionado</p>
+                    <button class="btn btn-sm btn-primary mt-2" id="add-first-habilidade">
+                        <i class="fas fa-plus"></i> Adicionar Primeira Habilidade
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- RITUAIS -->
+    <div class="card mb-4 seccionavel" data-secao="rituais" data-card-id="rituais">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">
+                <i class="fas fa-hat-wizard"></i> Rituais
+            </h5>
+            <div class="controles-secao">
+                <button class="btn btn-sm btn-primary" id="add-ritual">
+                    <i class="fas fa-plus"></i> Novo
+                </button>
+                <button class="btn btn-sm btn-outline toggle-secao">
+                    <i class="fas fa-minus"></i>
+                </button>
+            </div>
+        </div>
+        <div class="card-body conteudo-secao">
+            <div id="rituais-container">
+                <div class="vazio">
+                    <i class="fas fa-hat-wizard fa-2x mb-3"></i>
+                    <p>Nenhum ritual aprendido</p>
+                    <button class="btn btn-sm btn-primary mt-2" id="add-first-ritual">
+                        <i class="fas fa-plus"></i> Adicionar Primeiro Ritual
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INVENTÁRIO -->
+    <div class="card mb-4 seccionavel" data-secao="inventario" data-card-id="inventario">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">
+                <i class="fas fa-backpack"></i> Inventário
+            </h5>
+            <div class="controles-secao">
+                <button class="btn btn-sm btn-primary" id="add-item">
+                    <i class="fas fa-plus"></i> Novo Item
+                </button>
+                <button class="btn btn-sm btn-outline toggle-secao">
+                    <i class="fas fa-minus"></i>
+                </button>
+            </div>
+        </div>
+        <div class="card-body conteudo-secao">
+            <div class="inventario-info mb-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label class="form-label">Créditos</label>
+                        <input type="number" class="form-control" id="creditos" value="0" min="0">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Carga Atual</label>
+                        <div class="input-group">
+                            <input type="number" class="form-control" id="carga-atual" value="0" readonly>
+                            <span class="input-group-text">/</span>
+                            <input type="number" class="form-control" id="carga-max" value="10" min="1">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="itens-container">
+                <div class="vazio">
+                    <i class="fas fa-backpack fa-2x mb-3"></i>
+                    <p>Inventário vazio</p>
+                    <button class="btn btn-sm btn-primary mt-2" id="add-first-item">
+                        <i class="fas fa-plus"></i> Adicionar Primeiro Item
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PROFICIÊNCIAS -->
+    <div class="card mb-4 seccionavel" data-secao="proficiencias" data-card-id="proficiencias">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">
+                <i class="fas fa-shield-alt"></i> Proficiências
+            </h5>
+            <div class="controles-secao">
+                <button class="btn btn-sm btn-outline toggle-secao">
+                    <i class="fas fa-minus"></i>
+                </button>
+            </div>
+        </div>
+        <div class="card-body conteudo-secao">
+            <div class="row">
+                <div class="col-md-6">
+                    <h6>Armas</h6>
+                    <textarea class="form-control" id="proficiencias-armas" rows="4" placeholder="Armas que possui proficiência..."></textarea>
+                </div>
+                <div class="col-md-6">
+                    <h6>Armaduras</h6>
+                    <textarea class="form-control" id="proficiencias-armaduras" rows="4" placeholder="Armaduras que possui proficiência..."></textarea>
+                </div>
+                <div class="col-12 mt-3">
+                    <h6>Outras Proficiências</h6>
+                    <textarea class="form-control" id="proficiencias-outras" rows="3" placeholder="Outras proficiências..."></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+            <!-- ABA HISTÓRIA (COM NOVA ORDEM) -->
+<div class="aba-conteudo" id="aba-historia">
+    <div class="cabecalho-aba">
+        <h2><i class="fas fa-book"></i> História do Personagem</h2>
+    </div>
+
+    <!-- INFORMAÇÕES BÁSICAS (AGORA É A PRIMEIRA) -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="mb-0">Informações Básicas</h5>
+        </div>
+        <div class="card-body">
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <label class="form-label">Data de Nascimento</label>
+                    <input type="date" class="form-control" id="data-nascimento">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Idade</label>
+                    <input type="number" class="form-control" id="idade" placeholder="Calculada automaticamente" readonly>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Local de Origem</label>
+                    <input type="text" class="form-control" id="local-origem" placeholder="Ex: São Paulo, SP">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PESSOAS IMPORTANTES (SEGUNDA) -->
+    <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Pessoas Importantes</h5>
+            <button type="button" class="btn btn-sm btn-primary" id="adicionar-pessoa">
+                <i class="fas fa-plus"></i> Adicionar Pessoa
+            </button>
+        </div>
+        <div class="card-body">
+            <div id="pessoas-container">
+                <!-- As pessoas serão adicionadas aqui dinamicamente -->
+            </div>
+        </div>
+    </div>
+
+    <!-- TRAÇOS DE PERSONALIDADE (TERCEIRA) -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="mb-0">Traços de Personalidade</h5>
+        </div>
+        <div class="card-body">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label">Medos e Fobias</label>
+                    <textarea class="form-control" id="medos" rows="3" placeholder="Ex: Altura, escuro, aranhas..."></textarea>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Manias</label>
+                    <textarea class="form-control" id="manias" rows="3" placeholder="Ex: Roer unhas, organizar coisas..."></textarea>
+                </div>
+                <div class="col-12">
+                    <label class="form-label">Pior Pesadelo</label>
+                    <input type="text" class="form-control" id="pior-pesadelo" placeholder="Descreva o pior pesadelo do personagem">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MOTIVAÇÕES (QUARTA) -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="mb-0">Motivações</h5>
+        </div>
+        <div class="card-body">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label">Objetivos</label>
+                    <textarea class="form-control" id="objetivos" rows="4" placeholder="O que seu personagem deseja alcançar?"></textarea>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Segredos</label>
+                    <textarea class="form-control" id="segredos" rows="4" placeholder="Segredos que seu personagem esconde..."></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- BIOGRAFIA (AGORA É A ÚLTIMA) -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="mb-0">Biografia</h5>
+        </div>
+        <div class="card-body">
+            <textarea class="form-control" id="biografia" rows="6" placeholder="Conte a história completa do seu personagem..."></textarea>
+        </div>
+    </div>
+</div>
+
+            <!-- ABA DESCRIÇÃO SIMPLIFICADA -->
+<div class="aba-conteudo" id="aba-descricao">
+    <div class="cabecalho-aba">
+        <h2><i class="fas fa-user"></i> Descrição Física do Personagem</h2>
+    </div>
+
+    <!-- CARACTERÍSTICAS FÍSICAS -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="mb-0">Características Físicas</h5>
+        </div>
+        <div class="card-body">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label">Altura</label>
+                    <div class="input-group">
+                        <input type="number" class="form-control" id="altura" placeholder="Ex: 175">
+                        <span class="input-group-text">cm</span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Peso</label>
+                    <div class="input-group">
+                        <input type="number" class="form-control" id="peso" placeholder="Ex: 70">
+                        <span class="input-group-text">kg</span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Cor dos Olhos</label>
+                    <input type="text" class="form-control" id="cor-olhos" placeholder="Ex: Castanho escuro">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Cor do Cabelo</label>
+                    <input type="text" class="form-control" id="cor-cabelo" placeholder="Ex: Preto">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Tipo de Cabelo</label>
+                    <input type="text" class="form-control" id="tipo-cabelo" placeholder="Ex: Cacheado, liso, ondulado...">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Cor da Pele</label>
+                    <input type="text" class="form-control" id="cor-pele" placeholder="Ex: Morena clara">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Tipo de Corpo</label>
+                    <input type="text" class="form-control" id="tipo-corpo" placeholder="Ex: Atlético, magro, robusto...">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Marcas/Tatuagens</label>
+                    <input type="text" class="form-control" id="marcas-tatuagens" placeholder="Ex: Cicatriz no queixo, tatuagem no braço...">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ESTILO VESTUÁRIO -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="mb-0">Estilo e Vestuário</h5>
+        </div>
+        <div class="card-body">
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <label class="form-label">Estilo de Roupa</label>
+                    <input type="text" class="form-control" id="estilo-roupa" placeholder="Ex: Casual urbano">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Acessórios</label>
+                    <input type="text" class="form-control" id="acessorios" placeholder="Ex: Anel de prata, óculos">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Calçados</label>
+                    <input type="text" class="form-control" id="calcados" placeholder="Ex: Botas de combate">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- OUTRAS CARACTERÍSTICAS -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="mb-0">Outras Características</h5>
+        </div>
+        <div class="card-body">
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <label class="form-label">Cicatrizes</label>
+                    <input type="text" class="form-control" id="cicatrizes" placeholder="Ex: Cicatriz de queimadura">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Defeitos Físicos</label>
+                    <input type="text" class="form-control" id="defeitos-fisicos" placeholder="Ex: Mancando levemente">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Particularidades</label>
+                    <input type="text" class="form-control" id="particularidades" placeholder="Ex: Olhos de cores diferentes">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- DESCRIÇÃO COMPLETA -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="mb-0">Descrição Completa</h5>
+        </div>
+        <div class="card-body">
+            <textarea class="form-control" id="descricao-completa" rows="8" placeholder="Escreva uma descrição completa da aparência física e presença do personagem. Inclua detalhes que chamam atenção à primeira vista e peculiaridades mais sutis..."></textarea>
+            <div class="ajuda-descricao mt-2">
+                <i class="fas fa-lightbulb text-warning"></i>
+                <small class="text-muted">Dica: Combine as informações dos campos acima em uma narrativa coesa</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+            <!-- ABA ANOTAÇÕES (BÁSICA) -->
+            <div class="aba-conteudo" id="aba-anotacoes">
+                <div class="cabecalho-aba">
+                    <h2><i class="fas fa-edit"></i> Anotações do Jogador</h2>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <textarea class="form-control" rows="15" placeholder="Suas anotações pessoais durante as sessões..."></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ABA MESTRE (BÁSICA) -->
+            <div class="aba-conteudo" id="aba-mestre">
+                <div class="cabecalho-aba">
+                    <h2><i class="fas fa-hat-wizard"></i> Anotações do Mestre</h2>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <textarea class="form-control" rows="15" placeholder="Anotações privadas do mestre sobre este personagem..."></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ABA AÇÕES (BÁSICA) -->
+            <div class="aba-conteudo" id="aba-acoes">
+                <div class="cabecalho-aba">
+                    <h2><i class="fas fa-history"></i> Histórico de Ações</h2>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="vazio">
+                            <i class="fas fa-history fa-2x mb-3"></i>
+                            <p>Nenhuma ação registrada ainda</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ÁREA DE NOTIFICAÇÕES -->
+    <div id="toast-area" style="position: fixed; right: 20px; bottom: 20px; z-index: 10550;"></div>
+
+    <!-- NO FINAL DO BODY -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Scripts na ordem correta -->
+<script src="../assets/js/jogador/abas-laterais.js"></script>
+<script src="../assets/js/jogador/principal-corrigido.js"></script>
+<script src="../assets/js/jogador/pericias-defesa.js"></script>
+<script src="../assets/js/jogador/descricao.js"></script>
+<script src="../assets/js/jogador/historia.js"></script>
+<script src="../assets/js/jogador/pericias.js"></script>
+<script src="../assets/js/jogador/sistema-audio.js"></script>
+<script src="/assets/js/jogador/layout-otimizado.js"></script>
+
+
+<script>
+// Inicialização coordenada
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🎮 Inicializando sistema Ordem Paranormal...');
+    
+    // Inicializar sistemas na ordem correta
+    if (window.sistemaAbas) {
+        window.sistemaAbas.init();
+    }
+    
+    if (window.principalCorrigido) {
+        window.principalCorrigido.init();
+    }
+    
+    // Outros sistemas serão inicializados automaticamente
+    console.log('✅ Todos os sistemas inicializados!');
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Login - Sistema RPG</title>
+  <link rel="stylesheet" href="../assets/css/global.css">
+</head>
+<body>
+  <div class="card">
+    <h2 id="title">Entrar</h2>
+    input { width:100%; padding:10px; border:1px solid #dfe6f2; border-radius:6px; }
+    button { width:100%; padding:10px; border-radius:6px; border:none; background:#2563eb; color:#fff; font-weight:700; cursor:pointer; }
+    .link { text-align:center; margin-top:10px; color:#2563eb; cursor:pointer; font-size:0.9rem; }
+    .small { font-size:0.9rem; color:#666; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2 id="title">Entrar</h2>
+
+    <div id="form-register" style="display:none;">
+      <div class="field"><input id="reg-username" placeholder="Usuário (username)"></div>
+      <div class="field"><input id="reg-display" placeholder="Nome exibido (opcional)"></div>
+      <div class="field"><input id="reg-password" type="password" placeholder="Senha"></div>
+      <button id="btn-register">Criar conta</button>
+      <div class="link" id="to-login">Já tenho conta — Entrar</div>
+    </div>
+
+    <div id="form-login">
+      <div class="field"><input id="login-username" placeholder="Usuário (username)"></div>
+      <div class="field"><input id="login-password" type="password" placeholder="Senha"></div>
+      <button id="btn-login">Entrar</button>
+      <div class="link" id="to-register">Criar nova conta</div>
+    </div>
+
+    <p class="small" id="msg" style="display:none;"></p>
+  </div>
+<script>
+// Verificar se veio de convite
+document.addEventListener('DOMContentLoaded', function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const inviteToken = urlParams.get('invite');
+    
+    if (inviteToken) {
+        // Se veio de convite, mostrar mensagem
+        const msg = document.getElementById('msg');
+        if (msg) {
+            msg.textContent = '🎉 Você foi convidado para uma campanha! Crie sua conta para aceitar.';
+            msg.style.display = 'block';
+            msg.style.color = '#2563eb';
+        }
+    }
+});
+</script>
+  <script src="/auth-client.js"></script>
+
+</body>
+</html>

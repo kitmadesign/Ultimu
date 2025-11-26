@@ -1,0 +1,204 @@
+/* pericias-fix.css - Versão final ajustada
+   - integra ícone ao input
+   - unifica visual do input e select (altura, borda, border-radius)
+   - reduz gap entre controles
+   - mantém cards de perícia uniformes e indicador de status
+*/
+
+/* ========== VARS ========== */
+:root{
+  --pericia-square-h: 128px;
+  --pericia-gap-tight: 0.25rem;
+  --filter-width: 180px;
+  --filter-gap: 0.4rem;            /* menor gap para visual mais compacto */
+  --status-size: 26px;
+  --muted-color: #adb5bd;
+  --transition-fast: 120ms ease;
+  --controls-height: 38px;
+  --controls-radius: 8px;
+  --controls-border: 1px solid rgba(73,80,87,0.6); /* usa border similar ao theme */
+  --controls-bg: rgba(0,0,0,0.25);
+}
+
+/* ========== FILTRO / BUSCA (layout e aparência final) ========== */
+.filtro-pericias-container{
+  display:flex!important;
+  align-items:center!important;
+  gap:var(--filter-gap)!important;
+  flex-wrap:nowrap!important;
+  width:100%!important;
+  box-sizing:border-box!important;
+  position:relative!important;
+  margin-bottom:0.75rem;
+}
+
+/* wrapper do grupo de busca: cria uma caixa com ícone + input integrada */
+.busca-pericias{
+  flex:0 0 var(--filter-width)!important;
+  min-width:300px!important;
+  max-width:var(--filter-width)!important;
+  display:flex!important;
+  align-items:center!important;
+  height:var(--controls-height)!important;
+  box-sizing:border-box!important;
+}
+
+/* estilo do input-group para ficar como uma única "caixa" */
+.busca-pericias .input-group{
+  display:flex!important;
+  align-items:center!important;
+  width:100%!important;
+  height:100%!important;
+  background:var(--controls-bg)!important;
+  border-radius:var(--controls-radius)!important;
+  box-sizing:border-box!important;
+  border:var(--controls-border)!important;
+  overflow:hidden!important;
+  gap:0!important;
+  padding:0!important;
+}
+
+/* ícone: sem bordas, centrado e alinhado com o input */
+.busca-pericias .input-group-text{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  height:100%!important;
+  padding:0 0.7rem!important;
+  background:transparent!important;
+  border:none!important;
+  color:var(--muted-color)!important;
+  box-sizing:border-box!important;
+}
+
+/* input: sem borda própria, ocupa o restante, mesma altura */
+.busca-pericias .form-control,
+.busca-pericias .input-group .form-control{
+  height:100%!important;
+  min-height:100%!important;
+  border:none!important;
+  background:transparent!important;
+  padding:0 0.6rem!important;
+  color:inherit!important;
+  box-shadow:none!important;
+  box-sizing:border-box!important;
+  border-radius:0!important; /* já está no wrapper */
+}
+
+/* select: caixa visual compatível com o input */
+.filtro-pericias{
+  flex:0 0 var(--filter-width)!important;
+  min-width:120px!important;
+  max-width:var(--filter-width)!important;
+  display:flex!important;
+  align-items:center!important;
+  height:var(--controls-height)!important;
+  box-sizing:border-box!important;
+}
+
+.filtro-pericias .form-select{
+  width:100%!important;
+  height:100%!important;
+  min-height:100%!important;
+  box-sizing:border-box!important;
+  padding:0 0.6rem!important;
+  border-radius:var(--controls-radius)!important;
+  border:var(--controls-border)!important;
+  background:var(--controls-bg)!important;
+  color:inherit!important;
+}
+
+/* contador discreto alinhado à direita */
+.contador-pericias{
+  margin-left:auto!important;
+  font-size:0.78rem!important;
+  color:var(--muted-color)!important;
+  opacity:0.8!important;
+  background:transparent!important;
+  border:none!important;
+  padding:0!important;
+  text-align:right!important;
+}
+
+/* proteger contra regras que forcem position absolute */
+.filtro-pericias-container,
+.filtro-pericias-container * { position: static !important; }
+
+/* garantir altura mínima para evitar overlap com margens estranhas */
+.filtro-pericias-container > * { min-height: calc(var(--controls-height) - 2px) !important; }
+
+/* transições suaves */
+.filtro-pericias-container .form-control,
+.filtro-pericias-container .form-select { transition: width var(--transition-fast), max-width var(--transition-fast); }
+
+/* ========== RESPONSIVIDADE ========== */
+@media (max-width:768px){
+  .filtro-pericias-container{ flex-wrap:wrap!important; gap:0.5rem!important; }
+  .busca-pericias, .filtro-pericias{
+    flex:1 1 auto!important; min-width:0!important; max-width:none!important; width:100%!important; height:auto!important;
+  }
+  .busca-pericias .input-group, .busca-pericias .input-group .form-control, .filtro-pericias .form-select{
+    height:auto!important; min-height:36px!important;
+  }
+  .contador-pericias{ width:100%!important; text-align:center!important; order:3!important; margin-top:0.25rem!important; }
+}
+
+/* ========== PERÍCIAS: CARDS UNIFORMES E ESPAÇAMENTO ========== */
+.pericias-grid-quadrados, #pericias-grid{ gap:0.6rem; align-items:start; }
+
+.pericia-quadrado{
+  height:var(--pericia-square-h)!important;
+  min-height:var(--pericia-square-h)!important;
+  max-height:var(--pericia-square-h)!important;
+  padding:0.6rem!important;
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:space-between!important;
+  gap:var(--pericia-gap-tight)!important;
+  box-sizing:border-box!important;
+  position:relative!important;
+  overflow:hidden!important;
+}
+
+/* cabeçalho e nome compactos */
+.pericia-cabecalho{ margin-bottom:0.15rem!important; display:flex; align-items:center; gap:0.35rem; justify-content:center; }
+.pericia-quadrado .pericia-nome, .pericia-quadrado .pericia-nome-quadrado{
+  margin-bottom:0.1rem!important; font-size:0.85rem!important; line-height:1.1!important; padding:0 0.15rem!important;
+  overflow-wrap:break-word!important; word-break:break-word!important;
+}
+
+/* áreas especiais (Ciências / Profissão) compactas e sem aumentar altura */
+.pericia-quadrado .pericia-area, .pericia-quadrado .area-especial-input, .pericia-quadrado input.pericia-area{
+  margin-top:0.12rem!important; height:auto!important; padding:0.2rem 0.35rem!important; font-size:0.75rem!important;
+  max-height:28px!important; box-sizing:border-box!important;
+}
+
+/* reduzir gap do bônus */
+.pericia-quadrado .pericia-bonus{ margin:0.15rem 0!important; }
+
+/* ajustes mobile */
+@media (max-width:480px){ :root{ --pericia-square-h:110px; --status-size:22px; } .pericia-quadrado{ height:var(--pericia-square-h)!important; min-height:var(--pericia-square-h)!important; } }
+
+/* ========== INDICADOR DE STATUS ========== */
+.pericia-status-btn{
+  width:var(--status-size)!important; height:var(--status-size)!important; min-width:var(--status-size)!important; min-height:var(--status-size)!important;
+  border-radius:50% !important; font-size:0.95rem!important; border:2px solid rgba(255,255,255,0.12)!important;
+  background:linear-gradient(135deg,var(--primary-color),#8e54e9)!important; color:#fff!important;
+  box-shadow:0 4px 12px rgba(111,66,193,0.25)!important; display:inline-flex!important; align-items:center!important;
+  justify-content:center!important; position:absolute!important; top:8px!important; right:8px!important; cursor:pointer!important;
+  transition:transform 140ms ease, box-shadow 140ms ease;
+}
+.pericia-status-btn:hover{ transform:translateY(-2px) scale(1.03); box-shadow:0 6px 18px rgba(111,66,193,0.35); }
+
+/* cores por nível */
+.pericia-quadrado.pericia-destreinada .pericia-status-btn{ background:linear-gradient(135deg,#6b7280,#9ca3af)!important; }
+.pericia-quadrado.pericia-treinada .pericia-status-btn  { background:linear-gradient(135deg,#3b82f6,#60a5fa)!important; }
+.pericia-quadrado.pericia-veterana .pericia-status-btn  { background:linear-gradient(135deg,#8b5cf6,#a78bfa)!important; }
+.pericia-quadrado.pericia-expert .pericia-status-btn    { background:linear-gradient(135deg,#10b981,#34d399)!important; }
+
+/* ========== UTILIDADES ========== */
+.pericias-grid-quadrados, #pericias-grid{ overflow:visible; }
+.pericia-quadrado, .pericia-bonus, .pericia-status-btn{ transition:all var(--transition-fast); }
+.filtro-pericias-container:hover .contador-pericias{ opacity:0.95; }
+
+/* fim */

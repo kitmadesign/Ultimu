@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="theme-color" content="#18181b">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistema RPG - Ordem Paranormal</title>
+  <link rel="stylesheet" href="assets/css/global.css">
+  <link rel="stylesheet" href="../assets/css/componentes.css">
+</head>
+<body>
+  <!-- Modal de Permissões -->
+  <div id="permissionsModal" class="modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 10000; align-items: center; justify-content: center;">
+    <div class="card" style="max-width: 500px; margin: 20px; background: var(--card);">
+      <div class="card-header">
+        <h2 class="card-title">🔒 Permissões Necessárias</h2>
+      </div>
+      <div style="padding: 20px;">
+        <p>Para uma experiência completa no sistema RPG, precisamos das seguintes permissões:</p>
+        
+        <div class="permission-item" style="display: flex; align-items: center; gap: 12px; margin: 16px 0; padding: 12px; border: 1px solid var(--bs-border-color); border-radius: 8px;">
+          <div style="font-size: 1.5rem;">🎵</div>
+          <div>
+            <strong>Áudio</strong>
+            <p style="margin: 4px 0 0 0; font-size: 0.9rem; color: var(--muted);">
+              Para efeitos sonoros e música ambiente
+            </p>
+          </div>
+          <div id="audioStatus" style="margin-left: auto; padding: 4px 8px; border-radius: 6px; font-size: 0.8rem; background: var(--danger);">
+            Pendente
+          </div>
+        </div>
+
+        <div class="permission-item" style="display: flex; align-items: center; gap: 12px; margin: 16px 0; padding: 12px; border: 1px solid var(--bs-border-color); border-radius: 8px;">
+          <div style="font-size: 1.5rem;">💾</div>
+          <div>
+            <strong>Armazenamento</strong>
+            <p style="margin: 4px 0 0 0; font-size: 0.9rem; color: var(--muted);">
+              Para salvar suas fichas e configurações
+            </p>
+          </div>
+          <div id="storageStatus" style="margin-left: auto; padding: 4px 8px; border-radius: 6px; font-size: 0.8rem; background: var(--success);">
+            Concedida
+          </div>
+        </div>
+
+        <div class="permission-item" style="display: flex; align-items: center; gap: 12px; margin: 16px 0; padding: 12px; border: 1px solid var(--bs-border-color); border-radius: 8px;">
+          <div style="font-size: 1.5rem;">🔔</div>
+          <div>
+            <strong>Notificações</strong>
+            <p style="margin: 4px 0 0 0; font-size: 0.9rem; color: var(--muted);">
+              Para alertas durante as sessões
+            </p>
+          </div>
+          <div id="notificationStatus" style="margin-left: auto; padding: 4px 8px; border-radius: 6px; font-size: 0.8rem; background: var(--warning);">
+            Opcional
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 12px; margin-top: 24px;">
+          <button id="requestPermissions" class="btn btn-primary" style="flex: 1;">
+            Conceder Permissões
+          </button>
+          <button id="skipPermissions" class="btn btn-ghost" style="flex: 1;">
+            Pular por enquanto
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="text-center mb-6">
+      <h1>🎮 Sistema de RPG</h1>
+      <p class="text-center">Ordem Paranormal - Experiência Imersiva</p>
+    </div>
+    
+    <div class="grid grid-2">
+      <!-- Card do Mestre -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">👑 Mestre</h2>
+        </div>
+        <p>Controle a sessão e gerencie o combate.</p>
+        
+        <div class="form-group mt-4">
+          <label class="form-label">Usuário Mestre</label>
+          <input type="text" id="mestre-username" class="form-input" placeholder="mestre" value="mestre">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Senha Mestre</label>
+          <input type="password" id="mestre-password" class="form-input" placeholder="075107" value="075107">
+        </div>
+        
+        <button class="btn btn-primary w-full" onclick="fazerLoginMestre()">
+          🔐 Acessar Painel do Mestre
+        </button>
+
+        <div id="mensagem-mestre" class="login-message"></div>
+      </div>
+      
+      <!-- Card do Jogador -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">🎲 Jogador</h2>
+        </div>
+        <p>Entre na sessão com sua ficha.</p>
+        
+        <div class="form-group mt-4">
+          <label class="form-label">Usuário</label>
+          <input type="text" id="jogador-username" class="form-input" placeholder="Nome de usuário">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Senha</label>
+          <input type="password" id="jogador-password" class="form-input" placeholder="Sua senha">
+        </div>
+        
+        <button class="btn btn-primary w-full" onclick="fazerLoginJogador()">
+          🎮 Acessar Ficha do Jogador
+        </button>
+
+        <div class="text-center mt-3">
+          <a href="javascript:void(0)" onclick="mostrarRegistro()" class="btn btn-ghost btn-sm">
+            📝 Criar nova conta
+          </a>
+        </div>
+
+        <div id="mensagem-jogador" class="login-message"></div>
+      </div>
+    </div>
+    
+    <!-- Formulário de Registro (inicialmente oculto) -->
+    <div id="form-registro" class="card mt-4" style="display: none;">
+      <div class="card-header">
+        <h2 class="card-title">📝 Criar Conta de Jogador</h2>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Usuário</label>
+        <input type="text" id="reg-username" class="form-input" placeholder="Nome de usuário">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Nome de exibição (opcional)</label>
+        <input type="text" id="reg-display" class="form-input" placeholder="Como quer ser chamado">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Senha</label>
+        <input type="password" id="reg-password" class="form-input" placeholder="Crie uma senha">
+      </div>
+      
+      <div class="grid grid-2 gap-2">
+        <button class="btn btn-primary" onclick="fazerRegistro()">
+          Criar Conta
+        </button>
+        <button class="btn btn-ghost" onclick="ocultarRegistro()">
+          Cancelar
+        </button>
+      </div>
+
+      <div id="mensagem-registro" class="login-message"></div>
+    </div>
+    
+    <div class="card mt-6">
+      <div class="card-header">
+        <h2 class="card-title">📋 Instruções</h2>
+      </div>
+      <div class="grid grid-2">
+        <div>
+          <h4>🎧 Para Jogadores</h4>
+          <ul style="color: var(--muted); line-height: 1.6;">
+            <li>Use fones de ouvido para experiência imersiva</li>
+            <li>Mantenha esta página aberta durante a sessão</li>
+            <li>Configure seu áudio corretamente</li>
+          </ul>
+        </div>
+        <div>
+          <h4>🔒 Permissões</h4>
+          <ul style="color: var(--muted); line-height: 1.6;">
+            <li>Áudio: Para efeitos sonoros</li>
+            <li>Armazenamento: Para salvar progresso</li>
+            <li>Notificações: Para alertas importantes</li>
+          </ul>
+          <button class="btn btn-sm btn-ghost mt-2" onclick="showPermissionsModal()">
+            Gerenciar Permissões
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Sistema de Gerenciamento de Permissões
+    class PermissionManager {
+      constructor() {
+        this.permissions = {
+          audio: false,
+          storage: true,
+          notifications: false
+        };
+        this.storageKey = 'rpgSystemPermissions';
+        this.loadPermissions();
+      }
+
+      loadPermissions() {
+        try {
+          const saved = localStorage.getItem(this.storageKey);
+          if (saved) {
+            this.permissions = { ...this.permissions, ...JSON.parse(saved) };
+          }
+        } catch (e) {
+          console.warn('Não foi possível carregar permissões salvas:', e);
+        }
+      }
+
+      savePermissions() {
+        try {
+          localStorage.setItem(this.storageKey, JSON.stringify(this.permissions));
+          sessionStorage.setItem(this.storageKey, JSON.stringify(this.permissions));
+        } catch (e) {
+          console.warn('Não foi possível salvar permissões:', e);
+        }
+      }
+
+      async requestAudioPermission() {
+        try {
+          const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+          await audioContext.resume();
+          
+          const testAudio = new Audio();
+          testAudio.src = 'data:audio/wav;base64,UklGRnoAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoAAAC';
+          testAudio.volume = 0;
+          
+          await testAudio.play();
+          testAudio.pause();
+          
+          this.permissions.audio = true;
+          this.savePermissions();
+          return true;
+        } catch (error) {
+          console.warn('Permissão de áudio negada:', error);
+          this.permissions.audio = false;
+          this.savePermissions();
+          return false;
+        }
+      }
+
+      async requestNotificationPermission() {
+        if (!('Notification' in window)) {
+          console.warn('Este navegador não suporta notificações');
+          return false;
+        }
+
+        if (Notification.permission === 'granted') {
+          this.permissions.notifications = true;
+          this.savePermissions();
+          return true;
+        }
+
+        if (Notification.permission === 'denied') {
+          console.warn('Permissão de notificações foi negada anteriormente');
+          return false;
+        }
+
+        try {
+          const permission = await Notification.requestPermission();
+          this.permissions.notifications = permission === 'granted';
+          this.savePermissions();
+          return this.permissions.notifications;
+        } catch (error) {
+          console.warn('Erro ao solicitar permissão de notificações:', error);
+          return false;
+        }
+      }
+
+      checkStoragePermission() {
+        try {
+          localStorage.setItem('test', 'test');
+          localStorage.removeItem('test');
+          this.permissions.storage = true;
+          this.savePermissions();
+          return true;
+        } catch (e) {
+          console.warn('Armazenamento não disponível:', e);
+          this.permissions.storage = false;
+          this.savePermissions();
+          return false;
+        }
+      }
+
+      async requestAllPermissions() {
+        const results = {
+          audio: await this.requestAudioPermission(),
+          storage: this.checkStoragePermission(),
+          notifications: await this.requestNotificationPermission()
+        };
+
+        this.updateUI();
+        return results;
+      }
+
+      updateUI() {
+        const audioStatus = document.getElementById('audioStatus');
+        const storageStatus = document.getElementById('storageStatus');
+        const notificationStatus = document.getElementById('notificationStatus');
+
+        if (audioStatus) {
+          audioStatus.textContent = this.permissions.audio ? 'Concedida' : 'Pendente';
+          audioStatus.style.background = this.permissions.audio ? 'var(--success)' : 'var(--danger)';
+        }
+
+        if (storageStatus) {
+          storageStatus.textContent = this.permissions.storage ? 'Concedida' : 'Bloqueada';
+          storageStatus.style.background = this.permissions.storage ? 'var(--success)' : 'var(--danger)';
+        }
+
+        if (notificationStatus) {
+          notificationStatus.textContent = this.permissions.notifications ? 'Concedida' : 'Opcional';
+          notificationStatus.style.background = this.permissions.notifications ? 'var(--success)' : 'var(--warning)';
+        }
+      }
+
+      getPermissions() {
+        return { ...this.permissions };
+      }
+    }
+
+    const permissionManager = new PermissionManager();
+
+    // Funções de Login
+    async function fazerLoginMestre() {
+      const username = document.getElementById('mestre-username').value;
+      const password = document.getElementById('mestre-password').value;
+      const mensagem = document.getElementById('mensagem-mestre');
+
+      try {
+        mostrarMensagem(mensagem, '⏳ Verificando credenciais...', 'loading');
+
+        const response = await fetch('/api/login-mestre', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ username, password })
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+          localStorage.setItem('rpg_token', data.token);
+          localStorage.setItem('rpg_user_role', 'mestre');
+          localStorage.setItem('rpg_user_name', data.user.displayName);
+          
+          mostrarMensagem(mensagem, '✅ Acesso concedido! Redirecionando...', 'success');
+          
+          setTimeout(() => {
+            window.location.href = '/mestre/dashboard.html';
+          }, 1000);
+        } else {
+          mostrarMensagem(mensagem, '❌ ' + (data.error || 'Credenciais inválidas'), 'error');
+        }
+      } catch (error) {
+        console.error('Erro no login:', error);
+        mostrarMensagem(mensagem, '❌ Erro de conexão com o servidor', 'error');
+      }
+    }
+
+    async function fazerLoginJogador() {
+      const username = document.getElementById('jogador-username').value;
+      const password = document.getElementById('jogador-password').value;
+      const mensagem = document.getElementById('mensagem-jogador');
+
+      try {
+        mostrarMensagem(mensagem, '⏳ Verificando credenciais...', 'loading');
+
+        const response = await fetch('/api/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ username, password })
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+          localStorage.setItem('rpg_token', data.token);
+          localStorage.setItem('rpg_user_role', 'jogador');
+          localStorage.setItem('rpg_user_name', data.user.displayName);
+          
+          mostrarMensagem(mensagem, '✅ Login realizado! Redirecionando...', 'success');
+          
+          setTimeout(() => {
+            window.location.href = '/jogador/dashboard.html';
+          }, 1000);
+        } else {
+          mostrarMensagem(mensagem, '❌ ' + (data.error || 'Credenciais inválidas'), 'error');
+        }
+      } catch (error) {
+        console.error('Erro no login:', error);
+        mostrarMensagem(mensagem, '❌ Erro de conexão com o servidor', 'error');
+      }
+    }
+
+    async function fazerRegistro() {
+      const username = document.getElementById('reg-username').value;
+      const displayName = document.getElementById('reg-display').value || username;
+      const password = document.getElementById('reg-password').value;
+      const mensagem = document.getElementById('mensagem-registro');
+
+      if (!username || !password) {
+        mostrarMensagem(mensagem, '❌ Preencha todos os campos obrigatórios', 'error');
+        return;
+      }
+
+      try {
+        mostrarMensagem(mensagem, '⏳ Criando sua conta...', 'loading');
+
+        const response = await fetch('/api/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ username, displayName, password })
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+          mostrarMensagem(mensagem, '✅ Conta criada com sucesso! Faça login agora.', 'success');
+          
+          document.getElementById('reg-username').value = '';
+          document.getElementById('reg-display').value = '';
+          document.getElementById('reg-password').value = '';
+          
+          setTimeout(() => {
+            ocultarRegistro();
+            mostrarMensagem(mensagem, '', 'success');
+          }, 2000);
+        } else {
+          mostrarMensagem(mensagem, '❌ ' + (data.error || 'Erro ao criar conta'), 'error');
+        }
+      } catch (error) {
+        console.error('Erro no registro:', error);
+        mostrarMensagem(mensagem, '❌ Erro de conexão com o servidor', 'error');
+      }
+    }
+
+    function mostrarMensagem(elemento, texto, tipo) {
+      elemento.textContent = texto;
+      elemento.style.display = texto ? 'block' : 'none';
+      
+      elemento.classList.remove('login-success', 'login-error', 'login-loading');
+      
+      if (tipo === 'success') {
+        elemento.classList.add('login-success');
+      } else if (tipo === 'error') {
+        elemento.classList.add('login-error');
+      } else if (tipo === 'loading') {
+        elemento.classList.add('login-loading');
+      }
+    }
+
+    function mostrarRegistro() {
+      document.getElementById('form-registro').style.display = 'block';
+    }
+
+    function ocultarRegistro() {
+      document.getElementById('form-registro').style.display = 'none';
+      document.getElementById('mensagem-registro').style.display = 'none';
+    }
+
+    function showPermissionsModal() {
+      const modal = document.getElementById('permissionsModal');
+      permissionManager.updateUI();
+      modal.style.display = 'flex';
+    }
+
+    function hidePermissionsModal() {
+      const modal = document.getElementById('permissionsModal');
+      modal.style.display = 'none';
+    }
+
+    // Event Listeners
+    document.addEventListener('DOMContentLoaded', function() {
+      const hasSeenPermissions = sessionStorage.getItem('hasSeenPermissions');
+      if (!hasSeenPermissions) {
+        setTimeout(showPermissionsModal, 1000);
+        sessionStorage.setItem('hasSeenPermissions', 'true');
+      }
+
+      const requestBtn = document.getElementById('requestPermissions');
+      if (requestBtn) {
+        requestBtn.addEventListener('click', async function() {
+          requestBtn.textContent = 'Solicitando...';
+          requestBtn.disabled = true;
+          
+          await permissionManager.requestAllPermissions();
+          
+          requestBtn.textContent = 'Permissões Concedidas!';
+          setTimeout(() => {
+            hidePermissionsModal();
+            requestBtn.textContent = 'Conceder Permissões';
+            requestBtn.disabled = false;
+          }, 1500);
+        });
+      }
+
+      const skipBtn = document.getElementById('skipPermissions');
+      if (skipBtn) {
+        skipBtn.addEventListener('click', hidePermissionsModal);
+      }
+
+      document.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          if (document.getElementById('form-registro').style.display === 'block') {
+            fazerRegistro();
+          } else if (document.activeElement.closest('.card:first-child')) {
+            fazerLoginMestre();
+          } else {
+            fazerLoginJogador();
+          }
+        }
+      });
+
+      permissionManager.updateUI();
+    });
+
+    window.permissionManager = permissionManager;
+  </script>
+
+  <style>
+    .permission-item {
+      transition: all 0.3s ease;
+    }
+
+    .permission-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .modal {
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .w-full {
+      width: 100%;
+    }
+
+    .login-message {
+      margin-top: 1rem;
+      padding: 0.75rem;
+      border-radius: 6px;
+      text-align: center;
+      font-size: 0.9rem;
+      display: none;
+    }
+
+    .login-success {
+      background: var(--success);
+      color: white;
+    }
+
+    .login-error {
+      background: var(--danger);
+      color: white;
+    }
+
+    .login-loading {
+      background: var(--warning);
+      color: white;
+    }
+  </style>
+</body>
+</html>
